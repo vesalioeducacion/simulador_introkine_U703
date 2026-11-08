@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INTRODUCCIÓN A LA KINESIOLOGÍA - Neuroanatomía & Biomecánica Funcional (Facultad de Cs. Médicas - UCCuyo)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            uccNavy: '#162144',
+            uccDarkNavy: '#0d152c',
+            uccCyan: '#06b6d4',
+            uccCyanLight: '#e0f7fa',
+            uccAccent: '#436600',
+            uccSlate: '#f8fafc',
+            uccGold: '#eab308'
+          },
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #f7f9f6;
+      color: #1e293b;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* Paleta Institucional UCCuyo (Verde Oliva) */
+    .text-accent { color: #436600; }
+    .bg-accent { background-color: #436600; }
+    .bg-accent-hover:hover { background-color: #324d00; }
+    .bg-accent-light { background-color: #f1f6eb; }
+    .border-accent { border-color: #436600; }
+
+    .interactive-card {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .interactive-card:hover {
+      transform: translateY(-2px);
+      border-color: #436600;
+      box-shadow: 0 10px 25px -5px rgba(67, 102, 0, 0.12);
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 4px rgba(67, 102, 0, 0.4)); }
+      50% { filter: drop-shadow(0 0 16px rgba(67, 102, 0, 0.9)); }
+    }
+    .pulse-signal {
+      animation: pulseGlow 1.8s infinite ease-in-out;
+    }
+    .custom-scrollbar::-webkit-scrollbar, .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track, .custom-scroll::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb, .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover, .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .neuro-path {
+      stroke-dasharray: 8;
+      animation: dashMove 20s linear infinite;
+    }
+    @keyframes dashMove {
+      to {
+        stroke-dashoffset: -1000;
+      }
+    }
+    .clickable-node {
+      cursor: pointer;
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: filter 0.25s ease, opacity 0.25s ease;
+    }
+    .clickable-node:hover {
+      filter: drop-shadow(0 0 12px rgba(6, 182, 212, 0.75));
+      opacity: 0.95;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-accent/20 text-gray-800">
+
+  <!-- ========================================================================= -->
+  <!-- CABECERA INSTITUCIONAL UCCUYO (Idéntica a U7-01 y U7-02)                  -->
+  <!-- ========================================================================= -->
+  <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-accent flex items-center justify-center text-white font-bold text-xl shadow-md">
+          IK
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-gray-800 tracking-wide uppercase">INTRODUCCIÓN A LA KINESIOLOGÍA</h1>
+          <p class="text-xs text-gray-500 font-semibold">Lic. en Kinesiología y Fisiatría (Facultad de Cs. Médicas - UCCuyo)</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2">
+
+        <!-- Botón Vademécum Teórico -->
+        <button onclick="openFormulasModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-semibold rounded-lg border border-gray-200 hover:bg-gray-200 transition">
+          <i class="fa-solid fa-book-bookmark text-accent"></i>
+          <span class="hidden sm:inline">Vademécum</span>
+        </button>
+        <!-- Botón Guía de Uso -->
+        <button onclick="openTutorial()" class="flex items-center gap-1.5 px-3 py-1.5 bg-accent text-white text-xs font-semibold rounded-lg shadow-sm hover:opacity-90 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          Guía de Uso
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- CONTENIDO PRINCIPAL CON SIDEBAR LATERAL                                   -->
+  <!-- ========================================================================= -->
+  <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 flex flex-col lg:flex-row gap-6">
+    
+    <!-- Menú de Navegación Lateral -->
+    <nav class="w-full lg:w-64 flex flex-row lg:flex-col gap-2 bg-white p-3 rounded-2xl shadow-sm border border-gray-100 overflow-x-auto lg:overflow-x-visible whitespace-nowrap lg:whitespace-normal sticky top-20 h-fit">
+      <button onclick="switchTab('mod-anatomia')" id="tab-btn-mod-anatomia" class="bg-accent text-white flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-semibold transition shadow-sm flex items-center gap-2">
+        <i class="fa-solid fa-diagram-project"></i> <span>1. Mapa Anatómico (SNC & SNP)</span>
+      </button>
+      <button onclick="switchTab('mod-funcional')" id="tab-btn-mod-funcional" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition flex items-center gap-2">
+        <i class="fa-solid fa-sliders"></i> <span>2. Clasificación Funcional</span>
+      </button>
+      <button onclick="switchTab('mod-triada')" id="tab-btn-mod-triada" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition flex items-center gap-2">
+        <i class="fa-solid fa-bolt-lightning"></i> <span>3. Tríada Estímulo-Respuesta</span>
+      </button>
+      <button onclick="switchTab('mod-taller')" id="tab-btn-mod-taller" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition flex items-center gap-2">
+        <i class="fa-solid fa-user-doctor"></i> <span>4. Taller Kinésico & Casos</span>
+      </button>
+    </nav>
+
+    <!-- Área de Contenido Dinámico -->
+    <div class="flex-1 space-y-6">
+
+    <!-- ========================================================================= -->
+    <!-- MÓDULO 1: ORGANIZACIÓN ANATÓMICA Y ESTRUCTURAL (SNC VS. SNP)             -->
+    <!-- ========================================================================= -->
+    <section id="mod-anatomia" class="tab-content transition-opacity duration-300 block space-y-6">
+      
+      <!-- Tarjeta de Contexto Teórico Institucional -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-lime-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-accent">Anatomía Estructural y Topográfica</span>
+          <span class="text-xs bg-accent-light text-accent px-2.5 py-0.5 rounded border border-accent/20 font-semibold font-mono">Eje Protegido vs. Conducción Periférica</span>
+        </div>
+        <h2 class="text-xl font-bold text-slate-800 mb-2">Organización Anatómica: Órganos y Partes del Sistema Nervioso</h2>
+        <p class="text-sm text-slate-600 leading-relaxed">
+          El Sistema Nervioso se clasifica estructuralmente según su localización y protección ósea. En kinesiología, diferenciar los órganos del <strong>Sistema Nervioso Central (SNC)</strong> —protegidos por el cráneo y el conducto vertebral— de las vías del <strong>Sistema Nervioso Periférico (SNP)</strong> —12 pares craneales y 31 pares espinales— es indispensable para evaluar lesiones motoras centrales (ej. ACV, trauma raquimedular) frente a periféricas (radiculopatías o lesiones de nervios tronculares).
+        </p>
+      </div>
+
+      <!-- SECCIÓN A: SISTEMA NERVIOSO CENTRAL (SNC) -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-accent text-white flex items-center justify-center font-bold text-sm shadow-sm">
+              <i class="fa-solid fa-brain"></i>
+            </span>
+            <div>
+              <h3 class="text-base font-bold text-slate-800">Sistema Nervioso Central (SNC)</h3>
+              <p class="text-xs text-slate-500 font-medium">Órganos axiales protegidos por estuches óseos (Cráneo y Columna Vertebral)</p>
+            </div>
+          </div>
+          <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-accent-light text-accent border border-accent/20 font-mono">
+            Eje Neuroaxial
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Tarjeta 1: Cerebro -->
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between interactive-card">
+            <div>
+              <div class="flex items-center justify-between pb-2 mb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2 text-accent">
+                  <i class="fa-solid fa-brain text-base"></i>
+                  <h4 class="font-bold text-slate-800 text-sm">Cerebro (Telencéfalo & Diencéfalo)</h4>
+                </div>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200 font-mono">Cavidad Craneal</span>
+              </div>
+              <ul class="text-xs text-slate-600 space-y-2 leading-relaxed">
+                <li><strong class="text-slate-800">Ubicación y Protección:</strong> Ocupa la mayor parte de la cavidad craneal, protegido por la calota, las meninges y el líquido cefalorraquídeo (LCR).</li>
+                <li><strong class="text-slate-800">Estructura Interna:</strong> Hemisferios cerebrales con corteza de sustancia gris (áreas motoras y sensoriales), sustancia blanca subcortical y núcleos de la base, más el diencéfalo (tálamo e hipotálamo).</li>
+                <li><strong class="text-slate-800">Función Principal:</strong> Control motor voluntario primario (área 4), percepción consciente, praxias motrices finas y funciones cognitivas superiores.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-accent bg-accent-light/60 p-2.5 rounded-xl font-medium">
+              <i class="fa-solid fa-notes-medical mr-1"></i> <strong>Relevancia Kinésica:</strong> La neuroplasticidad cortical permite la reeducación motriz en pacientes post-ACV y el reaprendizaje de patrones de marcha y manipulación.
+            </div>
+          </div>
+
+          <!-- Tarjeta 2: Cerebelo -->
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between interactive-card">
+            <div>
+              <div class="flex items-center justify-between pb-2 mb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2 text-accent">
+                  <i class="fa-solid fa-shapes text-base"></i>
+                  <h4 class="font-bold text-slate-800 text-sm">Cerebelo («Pequeño Cerebro»)</h4>
+                </div>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200 font-mono">Fosa Posterior</span>
+              </div>
+              <ul class="text-xs text-slate-600 space-y-2 leading-relaxed">
+                <li><strong class="text-slate-800">Ubicación y Protección:</strong> Situado en la fosa craneal posterior, dorsal al tronco del encéfalo y bajo la tienda del cerebelo (repliegue de la duramadre).</li>
+                <li><strong class="text-slate-800">Estructura Interna:</strong> Formado por el vermis central, dos hemisferios cerebelosos, corteza trilaminar y núcleos profundos (dentado, interpuesto, fastigio).</li>
+                <li><strong class="text-slate-800">Función Principal:</strong> Coordinación de movimientos complejos, metría motora (frenado y precisión), control del tono postural y equilibrio dinámico.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-accent bg-accent-light/60 p-2.5 rounded-xl font-medium">
+              <i class="fa-solid fa-notes-medical mr-1"></i> <strong>Relevancia Kinésica:</strong> Los ejercicios de reeducación neuromuscular y plataformas propioceptivas estimulan las vías espinocerebelosas para tratar ataxias e inestabilidad postural.
+            </div>
+          </div>
+
+          <!-- Tarjeta 3: Tronco Encefálico -->
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between interactive-card">
+            <div>
+              <div class="flex items-center justify-between pb-2 mb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2 text-accent">
+                  <i class="fa-solid fa-network-wired text-base"></i>
+                  <h4 class="font-bold text-slate-800 text-sm">Tronco Encefálico (Tallo Cerebral)</h4>
+                </div>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200 font-mono">Mesencéfalo • Protuberancia • Bulbo</span>
+              </div>
+              <ul class="text-xs text-slate-600 space-y-2 leading-relaxed">
+                <li><strong class="text-slate-800">Componentes Clave:</strong>
+                  <ul class="list-disc pl-4 space-y-1 mt-1">
+                    <li><strong>Mesencéfalo:</strong> Pedúnculos cerebrales y sustancia negra dopaminérgica (control motor extrapiramidal).</li>
+                    <li><strong>Protuberancia (Puente):</strong> Rodete prominente de fibras transversas con núcleos pontinos de los pares craneales V, VI y VII.</li>
+                    <li><strong>Bulbo Raquídeo (Médula Oblongada):</strong> Centros vitales cardiorrespiratorios y decusación de las vías pirámides motoras.</li>
+                  </ul>
+                </li>
+                <li><strong class="text-slate-800">Función Principal:</strong> Vía de paso de todas las vías ascendentes y descendentes, control del ciclo vigilia-sueño y funciones vitales autónomas vegetativas.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-accent bg-accent-light/60 p-2.5 rounded-xl font-medium">
+              <i class="fa-solid fa-notes-medical mr-1"></i> <strong>Relevancia Kinésica:</strong> Crucial en el abordaje del paciente con enfermedad de Parkinson (alteración de sustancia negra) y en kinesiología respiratoria por el centro bulbar inspiratorio/espiratorio.
+            </div>
+          </div>
+
+          <!-- Tarjeta 4: Médula Espinal -->
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between interactive-card">
+            <div>
+              <div class="flex items-center justify-between pb-2 mb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2 text-accent">
+                  <i class="fa-solid fa-arrows-up-down text-base"></i>
+                  <h4 class="font-bold text-slate-800 text-sm">Médula Espinal</h4>
+                </div>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-cyan-50 text-cyan-800 border border-cyan-200 font-mono">Conducto Vertebral</span>
+              </div>
+              <ul class="text-xs text-slate-600 space-y-2 leading-relaxed">
+                <li><strong class="text-slate-800">Extensión y Protección:</strong> Cordón neural cilíndrico protegido en el conducto raquídeo vertebral, extendido desde el foramen magno occipital hasta L1-L2 (cono medular y cola de caballo).</li>
+                <li><strong class="text-slate-800">Sustancia Gris & Blanca:</strong> Sustancia gris interna en forma de "H" (astas anteriores motoras y astas posteriores sensitivas) rodeada por cordones de sustancia blanca (haces corticoespinales y espinotalámicos).</li>
+                <li><strong class="text-slate-800">Función Principal:</strong> Centro integrador de los reflejos miotáticos espinales involuntarios y autopista bidireccional entre el encéfalo y la periferia corporal.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-accent bg-accent-light/60 p-2.5 rounded-xl font-medium">
+              <i class="fa-solid fa-notes-medical mr-1"></i> <strong>Relevancia Kinésica:</strong> Evaluación neurológica obligatoria de reflejos osteotendinosos (rotuliano, aquíleo) y rehabilitación integral en traumatismos raquimedulares (paraplejías y tetraplejías).
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECCIÓN B: SISTEMA NERVIOSO PERIFÉRICO (SNP) -->
+      <div class="space-y-4 pt-2">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-amber-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+              <i class="fa-solid fa-route"></i>
+            </span>
+            <div>
+              <h3 class="text-base font-bold text-slate-800">Sistema Nervioso Periférico (SNP)</h3>
+              <p class="text-xs text-slate-500 font-medium">Redes nerviosas que emergen del eje central para conectar con receptores y efectores</p>
+            </div>
+          </div>
+          <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-mono">
+            43 Pares Nerviosos
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Tarjeta 5: 12 Pares Craneales -->
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between interactive-card">
+            <div>
+              <div class="flex items-center justify-between pb-2 mb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2 text-amber-700">
+                  <i class="fa-solid fa-head-side-virus text-base"></i>
+                  <h4 class="font-bold text-slate-800 text-sm">12 Pares de Nervios Craneales</h4>
+                </div>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 font-mono">Emergencia Encefálica</span>
+              </div>
+              <ul class="text-xs text-slate-600 space-y-2 leading-relaxed">
+                <li><strong class="text-slate-800">Origen y Recorrido:</strong> Emergen directamente del encéfalo (I y II del prosencéfalo; III a XII del tronco encefálico) y atraviesan agujeros y fisuras de la base del cráneo.</li>
+                <li><strong class="text-slate-800">Clasificación Funcional:</strong>
+                  <ul class="list-disc pl-4 space-y-1 mt-1">
+                    <li><em>Sensitivos puros:</em> I (Olfatorio), II (Óptico), VIII (Vestibulococlear).</li>
+                    <li><em>Motores puros:</em> III (Oculomotor), IV (Troclear), VI (Abducens), XI (Accesorio/Espinal), XII (Hipogloso).</li>
+                    <li><em>Mixtos (sensitivo-motores y parasimpáticos):</em> V (Trigémino), VII (Facial), IX (Glosofaríngeo), X (Vago/Neumogástrico).</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-amber-900 bg-amber-50/70 p-2.5 rounded-xl font-medium">
+              <i class="fa-solid fa-notes-medical mr-1"></i> <strong>Relevancia Kinésica:</strong> Fundamental en fisioterapia maxilofacial y parálisis facial periférica (nervio facial VII), rehabilitación vestibular del equilibrio (nervio VIII) y reeducación cervical del trapecio/ECM (nervio accesorio XI).
+            </div>
+          </div>
+
+          <!-- Tarjeta 6: 31 Pares Espinales / Raquídeos -->
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between interactive-card">
+            <div>
+              <div class="flex items-center justify-between pb-2 mb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2 text-cyan-700">
+                  <i class="fa-solid fa-diagram-project text-base"></i>
+                  <h4 class="font-bold text-slate-800 text-sm">31 Pares de Nervios Espinales (Raquídeos)</h4>
+                </div>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-cyan-50 text-cyan-800 border border-cyan-200 font-mono">Emergencia Medular</span>
+              </div>
+              <ul class="text-xs text-slate-600 space-y-2 leading-relaxed">
+                <li><strong class="text-slate-800">Distribución Segmentaria:</strong> 31 pares simétricos bilaterales que abandonan el conducto vertebral por los forámenes intervertebrales (agujeros de conjunción):
+                  <div class="grid grid-cols-5 gap-1.5 text-center font-mono font-bold my-1 text-[11px]">
+                    <div class="bg-slate-100 p-1 rounded border border-slate-200 text-cyan-800">8 Cervicales</div>
+                    <div class="bg-slate-100 p-1 rounded border border-slate-200 text-cyan-800">12 Torácicos</div>
+                    <div class="bg-slate-100 p-1 rounded border border-slate-200 text-cyan-800">5 Lumbares</div>
+                    <div class="bg-slate-100 p-1 rounded border border-slate-200 text-cyan-800">5 Sacros</div>
+                    <div class="bg-slate-100 p-1 rounded border border-slate-200 text-cyan-800">1 Coccígeo</div>
+                  </div>
+                </li>
+                <li><strong class="text-slate-800">Constitución Mixta:</strong> Cada nervio se forma por la fusión de una raíz anterior eferente (motora) y una raíz posterior aferente (sensitiva provista de un ganglio anexo).</li>
+                <li><strong class="text-slate-800">Plexos Nerviosos:</strong> Los ramos anteriores se entrelazan formando el plexo cervical, braquial (C5-T1), lumbar (L1-L4) y lumbosacro (L4-S4) para inervar miembros y tronco.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-cyan-900 bg-cyan-50/70 p-2.5 rounded-xl font-medium">
+              <i class="fa-solid fa-notes-medical mr-1"></i> <strong>Relevancia Kinésica:</strong> Base anatómica de la evaluación de miotomas (fuerza motriz segmental) y dermatomas (sensibilidad cutánea) en ciatalgias (L5-S1), lumbocitalgias y cervicobraquialgias.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECCIÓN C: DESAFÍO INTERACTIVO DE CLASIFICACIÓN ANATÓMICA -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
+          <div>
+            <h4 class="text-base font-bold text-slate-800 flex items-center gap-2">
+              <i class="fa-solid fa-vial-circle-check text-accent"></i> Desafío Práctico: Ensamblaje Estructural SNC vs. SNP
+            </h4>
+            <p class="text-xs text-slate-500">Comprueba tu comprensión clasificando cada estructura en el eje protegido o en las vías periféricas.</p>
+          </div>
+          <span id="drag-score" class="text-xs font-bold px-3 py-1 bg-accent-light text-accent rounded-full border border-accent/20 w-fit">
+            Aciertos: 0/6
+          </span>
+        </div>
+
+        <div class="max-w-xl mx-auto py-2">
+          <!-- Cuadro del elemento objetivo -->
+          <div id="target-item-box" class="bg-slate-50 border-2 border-dashed border-slate-300 rounded-2xl p-5 text-center transition-all">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Estructura a clasificar</span>
+            <span id="current-item-text" class="text-lg font-bold text-slate-800 block">
+              Bulbo Raquídeo
+            </span>
+            <span id="current-item-hint" class="text-xs text-slate-500 mt-1 block">
+              Centro vital cardiorrespiratorio protegido en la fosa posterior del cráneo.
+            </span>
+          </div>
+
+          <!-- Botones de clasificación -->
+          <div class="grid grid-cols-2 gap-3 mt-4">
+            <button onclick="evaluateClassification('SNC')" class="py-3 px-4 bg-accent hover:bg-accent-hover text-white rounded-xl text-xs font-bold shadow-sm transition active:scale-95 flex flex-col items-center justify-center gap-1">
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-brain"></i> SNC (Central)</span>
+              <span class="text-[10px] font-normal opacity-90">Encéfalo / Médula en estuche óseo</span>
+            </button>
+            <button onclick="evaluateClassification('SNP')" class="py-3 px-4 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold shadow-sm transition active:scale-95 flex flex-col items-center justify-center gap-1">
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-network-wired"></i> SNP (Periférico)</span>
+              <span class="text-[10px] font-normal opacity-90">12 Craneales / 31 Espinales</span>
+            </button>
+          </div>
+
+          <!-- Mensaje de retroalimentación -->
+          <div id="classif-feedback" class="mt-3 text-xs p-3 rounded-xl text-center hidden"></div>
+        </div>
+      </div>
+
+    </section>
+
+        <!-- ========================================================================= -->
+    <!-- MÓDULO 2: ORGANIZACIÓN FUNCIONAL (SOMÁTICO VS. AUTÓNOMO VS. ENTÉRICO)     -->
+    <!-- ========================================================================= -->
+    <section id="mod-funcional" class="tab-content transition-opacity duration-300 hidden">
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 mb-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-cyan-50 text-cyan-800 text-xs font-semibold uppercase tracking-wider mb-2">
+              <i class="fa-solid fa-heart-pulse text-cyan-600"></i> Fisiología de Control y Relación
+            </div>
+            <h2 class="text-2xl font-heading font-bold text-uccNavy">Control Voluntario vs. Regulación Homeostática Involuntaria</h2>
+            <p class="text-slate-600 text-sm mt-1 max-w-3xl">
+              Funcionalmente, el sistema nervioso coordina nuestra interacción motora consciente con el entorno (<strong>Somático</strong>) mientras mantiene la estabilidad fisiológica visceral frente a las demandas biomecánicas (<strong>Autónomo</strong>) y gobierna localmente la digestión (<strong>Entérico</strong>).
+            </p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="resetFunctionalTest()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 border border-slate-300">
+              <i class="fa-solid fa-rotate-right"></i> Reiniciar Casos
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparador de los 3 Subsistemas -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+        <!-- Tarjeta Somático -->
+        <div class="bg-white rounded-2xl p-5 border-t-4 border-t-blue-600 shadow-sm border-x border-b border-slate-200/80 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-100 text-blue-800">Vida de Relación</span>
+              <i class="fa-solid fa-person-running text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-heading font-bold text-uccNavy">S. N. Somático (SNS)</h3>
+            <ul class="text-xs text-slate-600 space-y-2 mt-3">
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-blue-500 mt-0.5"></i>
+                <span><strong>Control:</strong> Consciente y enteramente voluntario.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-blue-500 mt-0.5"></i>
+                <span><strong>Efector principal:</strong> Músculo esquelético estriado.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-blue-500 mt-0.5"></i>
+                <span><strong>Rol Kinésico:</strong> Postura, marcha, destrezas motoras, praxias, equilibrio dinámico y ejercicios resistidos.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-blue-900 bg-blue-50/50 p-2 rounded-lg font-medium">
+            Ejemplo: Contracción del cuádriceps para dar un paso al subir una grada.
+          </div>
+        </div>
+
+        <!-- Tarjeta Autónomo -->
+        <div class="bg-white rounded-2xl p-5 border-t-4 border-t-cyan-500 shadow-sm border-x border-b border-slate-200/80 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-cyan-100 text-cyan-800">Vegetativo / Homeostasis</span>
+              <i class="fa-solid fa-lungs text-cyan-600 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-heading font-bold text-uccNavy">S. N. Autónomo (SNA)</h3>
+            <ul class="text-xs text-slate-600 space-y-2 mt-3">
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-cyan-500 mt-0.5"></i>
+                <span><strong>Control:</strong> Involuntario, automático e inconsciente.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-cyan-500 mt-0.5"></i>
+                <span><strong>Efectores:</strong> Músculo liso, músculo cardíaco y glándulas.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-cyan-500 mt-0.5"></i>
+                <span><strong>Rol Kinésico:</strong> Adaptación cardiovascular al esfuerzo físico (aumento del gasto cardíaco, vasodilatación, sudoración).</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-cyan-900 bg-cyan-50/50 p-2 rounded-lg font-medium">
+            Ejemplo: Taquicardia y broncodilatación adaptativa durante la ergometría.
+          </div>
+        </div>
+
+        <!-- Tarjeta Entérico -->
+        <div class="bg-white rounded-2xl p-5 border-t-4 border-t-amber-500 shadow-sm border-x border-b border-slate-200/80 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-100 text-amber-800">Red Digestiva Intrínseca</span>
+              <i class="fa-solid fa-utensils text-amber-600 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-heading font-bold text-uccNavy">S. N. Entérico (SNE)</h3>
+            <ul class="text-xs text-slate-600 space-y-2 mt-3">
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-amber-500 mt-0.5"></i>
+                <span><strong>Control:</strong> Red intrínseca semiautónoma en las paredes viscerales.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-amber-500 mt-0.5"></i>
+                <span><strong>Redes neuronales:</strong> Plexo mientérico (Auerbach) y submucoso (Meissner).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-amber-500 mt-0.5"></i>
+                <span><strong>Rol Kinésico:</strong> Regulación de motilidad gastrointestinal (influenciada por la postura y la deambulación temprana postquirúrgica).</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-amber-900 bg-amber-50/50 p-2 rounded-lg font-medium">
+            Ejemplo: Movimientos de propulsión peristáltica del colon.
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulador de Categorización Kinésico-Funcional -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
+          <div>
+            <h3 class="text-base font-heading font-bold text-uccNavy flex items-center gap-2">
+              <i class="fa-solid fa-layer-group text-cyan-600"></i> Desafío Clínico: Discriminación de Respuestas Fisiológicas
+            </h3>
+            <p class="text-xs text-slate-500 mt-0.5">Clasifica cada situación kinésica en su subsistema funcional rector.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold text-slate-500">Progreso:</span>
+            <span id="func-counter" class="text-xs font-bold px-2.5 py-1 bg-accent-light text-accent rounded-lg border border-accent/20">Caso 1 de 6</span>
+          </div>
+        </div>
+
+        <div class="mt-6 max-w-2xl mx-auto">
+          <!-- Card de situación clínica -->
+          <div id="func-case-card" class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-6 shadow-inner text-center transition-all">
+            <span id="func-case-icon" class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-2xl mb-3">
+              <i class="fa-solid fa-dumbbell"></i>
+            </span>
+            <span id="func-case-tag" class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Situación Fisiokinésica</span>
+            <h4 id="func-case-title" class="text-lg font-heading font-bold text-uccNavy mb-2">
+              Lanzamiento voluntario de balón medicinal en rehabilitación de hombro
+            </h4>
+            <p id="func-case-desc" class="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto">
+              El paciente coordina conscientemente la contracción del deltoides, pectoral mayor y tríceps braquial para impulsar el balón hacia el kinesiólogo.
+            </p>
+          </div>
+
+          <!-- Opciones para responder -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6">
+            <button onclick="answerFunctional('somático')" class="p-3.5 rounded-xl border-2 border-blue-200 hover:border-blue-500 bg-white hover:bg-blue-50/50 text-blue-900 font-bold text-xs sm:text-sm flex flex-col items-center gap-1.5 transition shadow-sm group">
+              <i class="fa-solid fa-person-running text-lg text-blue-600 group-hover:scale-110 transition-transform"></i>
+              <span>Sistema Somático</span>
+              <span class="text-[10px] font-normal text-slate-500">Voluntario / Músculo Esquelético</span>
+            </button>
+
+            <button onclick="answerFunctional('autónomo')" class="p-3.5 rounded-xl border-2 border-cyan-200 hover:border-cyan-500 bg-white hover:bg-cyan-50/50 text-cyan-900 font-bold text-xs sm:text-sm flex flex-col items-center gap-1.5 transition shadow-sm group">
+              <i class="fa-solid fa-heart-pulse text-lg text-cyan-600 group-hover:scale-110 transition-transform"></i>
+              <span>Sistema Autónomo</span>
+              <span class="text-[10px] font-normal text-slate-500">Involuntario / FC y Homeostasis</span>
+            </button>
+
+            <button onclick="answerFunctional('entérico')" class="p-3.5 rounded-xl border-2 border-amber-200 hover:border-amber-500 bg-white hover:bg-amber-50/50 text-amber-900 font-bold text-xs sm:text-sm flex flex-col items-center gap-1.5 transition shadow-sm group">
+              <i class="fa-solid fa-utensils text-lg text-amber-600 group-hover:scale-110 transition-transform"></i>
+              <span>Sistema Entérico</span>
+              <span class="text-[10px] font-normal text-slate-500">Plexos de la Pared Digestiva</span>
+            </button>
+          </div>
+
+          <!-- Feedback dinámico -->
+          <div id="func-feedback" class="mt-4 p-4 rounded-xl text-xs sm:text-sm hidden text-center leading-relaxed"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- MÓDULO 3: TRÍADA FUNCIONAL DEL SISTEMA NERVIOSO                           -->
+    <!-- ========================================================================= -->
+    <section id="mod-triada" class="tab-content transition-opacity duration-300 hidden">
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 mb-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-purple-50 text-purple-800 text-xs font-semibold uppercase tracking-wider mb-2">
+              <i class="fa-solid fa-bolt text-purple-600"></i> Neurodinámica del Estímulo
+            </div>
+            <h2 class="text-2xl font-heading font-bold text-uccNavy">La Tríada Funcional: Sensitivo → Integración → Motor</h2>
+            <p class="text-slate-600 text-sm mt-1 max-w-3xl">
+              Cualquier acto sensoriomotor —desde el reflejo rotuliano monosináptico hasta la marcha atlética compleja— se fundamenta en tres fases secuenciales: 
+              <strong>Aferencia sensitiva</strong>, <strong>Integración en centros del SNC</strong> y <strong>Eferencia motora o secretora</strong>.
+            </p>
+          </div>
+
+          <!-- Selector de Modo de Circuito -->
+          <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
+            <button onclick="setTriadaCircuit('reflejo')" id="btn-circuit-reflejo" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-white text-uccNavy shadow-sm">
+              <i class="fa-solid fa-hammer mr-1 text-cyan-600"></i> Arco Reflejo Medular
+            </button>
+            <button onclick="setTriadaCircuit('voluntario')" id="btn-circuit-voluntario" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-600 hover:text-uccNavy">
+              <i class="fa-solid fa-person-running mr-1 text-blue-600"></i> Acto Motor Voluntario
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulador Dinámico de Conducción del Impulso -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 mb-6">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold">
+              <i class="fa-solid fa-wave-square"></i>
+            </span>
+            <div>
+              <h3 id="circuit-name-label" class="font-heading font-bold text-uccNavy text-base">Arco Reflejo Miotático Rotuliano (Espinal L3-L4)</h3>
+              <p id="circuit-type-label" class="text-xs text-slate-500">Respuesta refleja medular rápida, protectora e involuntaria.</p>
+            </div>
+          </div>
+
+          <!-- Controles de Simulación -->
+          <div class="flex items-center gap-2">
+            <button id="btn-run-impulse" onclick="triggerNerveImpulse()" class="px-4 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition flex items-center gap-2">
+              <i class="fa-solid fa-play"></i> Disparar Estímulo
+            </button>
+            <button onclick="resetCircuitAnimation()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs transition" title="Reiniciar circuito">
+              <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Lienzo SVG del Circuito Interactivo -->
+        <div class="relative w-full bg-slate-900 rounded-2xl p-6 overflow-hidden min-h-[340px] flex items-center justify-center border border-slate-800">
+          <svg id="svg-triada-canvas" viewBox="0 0 900 320" class="w-full h-auto select-none">
+            <!-- Definición de gradientes y filtros luminosos -->
+            <defs>
+              <linearGradient id="grad-afferent" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#38bdf8" />
+                <stop offset="100%" stop-color="#818cf8" />
+              </linearGradient>
+              <linearGradient id="grad-efferent" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#818cf8" />
+                <stop offset="100%" stop-color="#34d399" />
+              </linearGradient>
+              <filter id="glow-eff" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Trazado Aferente (Sensitivo) con vía continua y pulso -->
+            <path d="M 150,160 C 250,135 340,135 430,150" fill="none" stroke="#1e293b" stroke-width="8" stroke-linecap="round"/>
+            <path id="path-afferent" d="M 150,160 C 250,135 340,135 430,150" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-dasharray="8,6" opacity="0.75"/>
+            
+            <!-- Trazado Eferente (Motor) con vía continua y pulso -->
+            <path d="M 470,150 C 560,170 650,170 750,160" fill="none" stroke="#1e293b" stroke-width="8" stroke-linecap="round"/>
+            <path id="path-efferent" d="M 470,150 C 560,170 650,170 750,160" fill="none" stroke="#34d399" stroke-width="4" stroke-linecap="round" stroke-dasharray="8,6" opacity="0.75"/>
+
+            <!-- Estela luminosa secundaria -->
+            <circle id="action-potential-trail" cx="150" cy="160" r="14" fill="#fbbf24" opacity="0.25" filter="url(#glow-eff)" style="display: none;"/>
+            <!-- Partícula luminosa viajera principal (Potencial de Acción) -->
+            <circle id="action-potential-dot" cx="150" cy="160" r="8" fill="#facc15" stroke="#ffffff" stroke-width="2" filter="url(#glow-eff)" style="display: none;"/>
+
+            <!-- ESTACIÓN 1: FUNCIÓN SENSITIVA (AFERENTE) -->
+            <g class="clickable-node" onclick="showTriadStep(1)" id="step-node-1" transform="translate(100, 110)">
+              <circle cx="50" cy="50" r="44" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
+              <circle cx="50" cy="50" r="34" fill="#0369a1" opacity="0.3"/>
+              <text x="50" y="45" text-anchor="middle" class="text-sm font-bold fill-sky-300 pointer-events-none">1. SENSITIVA</text>
+              <text x="50" y="62" text-anchor="middle" class="text-[10px] font-medium fill-slate-300 pointer-events-none">(Aferente)</text>
+              <text x="50" y="112" text-anchor="middle" id="step1-label" class="text-[11px] font-semibold fill-sky-200">Receptor Cutáneo/Huso</text>
+            </g>
+
+            <!-- Flecha dirección 1 -->
+            <polygon points="290,140 305,145 290,150" fill="#38bdf8" opacity="0.7"/>
+
+            <!-- ESTACIÓN 2: FUNCIÓN DE INTEGRACIÓN (SNC) -->
+            <g class="clickable-node" onclick="showTriadStep(2)" id="step-node-2" transform="translate(400, 100)">
+              <rect x="0" y="10" width="100" height="80" rx="18" fill="#0f172a" stroke="#a855f7" stroke-width="3"/>
+              <rect x="10" y="20" width="80" height="60" rx="12" fill="#7e22ce" opacity="0.3"/>
+              <text x="50" y="47" text-anchor="middle" class="text-sm font-bold fill-purple-300 pointer-events-none">2. INTEGRACIÓN</text>
+              <text x="50" y="64" text-anchor="middle" class="text-[10px] font-medium fill-slate-300 pointer-events-none">Procesamiento SNC</text>
+              <text x="50" y="115" text-anchor="middle" id="step2-label" class="text-[11px] font-semibold fill-purple-200">Médula Espinal L3-L4</text>
+            </g>
+
+            <!-- Flecha dirección 2 -->
+            <polygon points="610,185 625,180 615,172" fill="#34d399" opacity="0.7"/>
+
+            <!-- ESTACIÓN 3: FUNCIÓN MOTORA (EFERENTE) -->
+            <g class="clickable-node" onclick="showTriadStep(3)" id="step-node-3" transform="translate(700, 110)">
+              <circle cx="50" cy="50" r="44" fill="#0f172a" stroke="#34d399" stroke-width="3"/>
+              <circle cx="50" cy="50" r="34" fill="#059669" opacity="0.3"/>
+              <text x="50" y="45" text-anchor="middle" class="text-sm font-bold fill-emerald-300 pointer-events-none">3. MOTORA</text>
+              <text x="50" y="62" text-anchor="middle" class="text-[10px] font-medium fill-slate-300 pointer-events-none">(Eferente)</text>
+              <text x="50" y="112" text-anchor="middle" id="step3-label" class="text-[11px] font-semibold fill-emerald-200">Efector: Cuádriceps</text>
+            </g>
+          </svg>
+
+          <!-- Banner Informativo Sobreimpreso durante el impulso -->
+          <div id="signal-status-toast" class="absolute bottom-3 left-6 right-6 bg-slate-800/90 backdrop-blur border border-slate-700 text-white rounded-xl py-2 px-4 text-xs flex items-center justify-between">
+            <span class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+              <span id="signal-status-text">Presiona «Disparar Estímulo» para transmitir el potencial bioeléctrico.</span>
+            </span>
+            <span id="signal-ms" class="text-[10px] text-slate-400 font-mono">0.0 ms</span>
+          </div>
+        </div>
+
+        <!-- Tarjetas Descriptivas de la Tríada -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+          <div id="card-triada-1" class="p-4 rounded-xl border border-sky-200 bg-sky-50/60 transition-all">
+            <span class="text-xs font-bold text-sky-800 uppercase tracking-wide block mb-1">Paso 1: Función Sensitiva</span>
+            <h4 class="text-sm font-bold text-uccNavy">Captación y Transducción Aferente</h4>
+            <p id="triada-text-1" class="text-xs text-slate-600 mt-1 leading-relaxed">
+              Receptores exteroceptivos (tacto, dolor) o propioceptivos (husos neuromusculares en el tendón rotuliano) convierten el estímulo físico en potenciales de acción enviados hacia el SNC.
+            </p>
+          </div>
+
+          <div id="card-triada-2" class="p-4 rounded-xl border border-purple-200 bg-purple-50/60 transition-all">
+            <span class="text-xs font-bold text-purple-800 uppercase tracking-wide block mb-1">Paso 2: Función de Integración</span>
+            <h4 class="text-sm font-bold text-uccNavy">Procesamiento y Toma de Decisión</h4>
+            <p id="triada-text-2" class="text-xs text-slate-600 mt-1 leading-relaxed">
+              Ocurre exclusivamente en el SNC (interneuronas o sinapsis directa con la motoneurona alfa en el asta anterior de la médula espinal o núcleos encefálicos).
+            </p>
+          </div>
+
+          <div id="card-triada-3" class="p-4 rounded-xl border border-emerald-200 bg-emerald-50/60 transition-all">
+            <span class="text-xs font-bold text-emerald-800 uppercase tracking-wide block mb-1">Paso 3: Función Motora</span>
+            <h4 class="text-sm font-bold text-uccNavy">Eferencia y Respuesta Efectora</h4>
+            <p id="triada-text-3" class="text-xs text-slate-600 mt-1 leading-relaxed">
+              La vía eferente transmite la orden motora hacia la placa motora del músculo esquelético, provocando la contracción extensora inmediata de la rodilla.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- MÓDULO 4: TALLER BIOMECÁNICO Y KINÉSICO DE APLICACIÓN FUNCIONAL           -->
+    <!-- ========================================================================= -->
+    <section id="mod-taller" class="tab-content transition-opacity duration-300 hidden">
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 mb-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-2">
+              <i class="fa-solid fa-user-doctor text-emerald-600"></i> Integración Profesional en Kinesiología
+            </div>
+            <h2 class="text-2xl font-heading font-bold text-uccNavy">Taller de Razonamiento Clínico & Fisiokinésico</h2>
+            <p class="text-slate-600 text-sm mt-1 max-w-3xl">
+              Aplica los principios de neuroanatomía y neurofisiología en tres escenarios kinésicos reales. Resuelve las preguntas clínicas para consolidar tu aptitud de ingreso universitario.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 bg-slate-100 px-3.5 py-2 rounded-xl border border-slate-200">
+            <span class="text-xs font-semibold text-slate-700"><i class="fa-solid fa-stethoscope text-accent"></i> Casos Clínicos Aplicados</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Casos Clínicos Interactivos -->
+      <div class="space-y-6">
+        <!-- Caso 1 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm">
+                01
+              </span>
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-cyan-600">Evaluación del Tono y Reflejos</span>
+                <h3 class="text-base font-heading font-bold text-uccNavy">Examen del Reflejo Patelar en un Paciente con Lesión Medular</h3>
+              </div>
+            </div>
+            <span id="case-badge-1" class="text-xs px-2.5 py-1 rounded-full font-bold bg-slate-100 text-slate-600">Pendiente</span>
+          </div>
+
+          <p class="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
+            Durante la semiología kinésica de un paciente, percutís el tendón rotuliano con el martillo de reflejos. Deseas evaluar la integridad del arco reflejo espinal a nivel L3-L4.
+          </p>
+
+          <div class="mt-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <h4 class="text-xs font-bold text-slate-700 mb-2">Pregunta Técnica: ¿Cuál es el orden neurofisiológico correcto y las estructuras involucradas en este reflejo miotático?</h4>
+            <div class="space-y-2" id="case-opts-1">
+              <button onclick="checkCaseOption(1, 'A', false)" class="w-full text-left p-3 rounded-xl border border-slate-300 hover:border-cyan-500 hover:bg-cyan-50/40 text-xs sm:text-sm transition flex items-start gap-2.5">
+                <span class="font-bold text-slate-500">A)</span>
+                <span>Receptor cutáneo de Pacini → Nervio craneal V → Bulbo raquídeo → Contracción de isquiotibiales.</span>
+              </button>
+              <button onclick="checkCaseOption(1, 'B', true)" class="w-full text-left p-3 rounded-xl border border-slate-300 hover:border-cyan-500 hover:bg-cyan-50/40 text-xs sm:text-sm transition flex items-start gap-2.5">
+                <span class="font-bold text-slate-500">B)</span>
+                <span>Huso neuromuscular (aferencia L3-L4) → Médula espinal (asta posterior y sinapsis anterior) → Motoneurona alfa eferente → Contracción del cuádriceps.</span>
+              </button>
+              <button onclick="checkCaseOption(1, 'C', false)" class="w-full text-left p-3 rounded-xl border border-slate-300 hover:border-cyan-500 hover:bg-cyan-50/40 text-xs sm:text-sm transition flex items-start gap-2.5">
+                <span class="font-bold text-slate-500">C)</span>
+                <span>Órgano tendinoso de Golgi → Tronco encefálico → Corteza premotora → Relajación involuntaria del diafragma.</span>
+              </button>
+            </div>
+            <div id="case-feedback-1" class="mt-3 text-xs p-3 rounded-xl hidden"></div>
+          </div>
+        </div>
+
+        <!-- Caso 2 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-700 font-bold flex items-center justify-center text-sm">
+                02
+              </span>
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-cyan-600">Rehabilitación Cardiovascular</span>
+                <h3 class="text-base font-heading font-bold text-uccNavy">Respuesta Neurovegetativa en la Prueba de Marcha de 6 Minutos</h3>
+              </div>
+            </div>
+            <span id="case-badge-2" class="text-xs px-2.5 py-1 rounded-full font-bold bg-slate-100 text-slate-600">Pendiente</span>
+          </div>
+
+          <p class="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
+            Un kinesiólogo en rehabilitación cardiorrespiratoria monitoriza a un paciente en cinta rodante. Al incrementar la velocidad, observa un incremento de la frecuencia cardíaca y redistribución del flujo sanguíneo a los gemelos y cuádriceps.
+          </p>
+
+          <div class="mt-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <h4 class="text-xs font-bold text-slate-700 mb-2">Pregunta Técnica: ¿Qué componente del Sistema Nervioso orquesta este ajuste autonómico visceral involuntario frente a la demanda metabólica?</h4>
+            <div class="space-y-2" id="case-opts-2">
+              <button onclick="checkCaseOption(2, 'A', false)" class="w-full text-left p-3 rounded-xl border border-slate-300 hover:border-cyan-500 hover:bg-cyan-50/40 text-xs sm:text-sm transition flex items-start gap-2.5">
+                <span class="font-bold text-slate-500">A)</span>
+                <span>Sistema Nervioso Somático voluntario mediante las fibras de los 12 pares craneales motores.</span>
+              </button>
+              <button onclick="checkCaseOption(2, 'B', true)" class="w-full text-left p-3 rounded-xl border border-slate-300 hover:border-cyan-500 hover:bg-cyan-50/40 text-xs sm:text-sm transition flex items-start gap-2.5">
+                <span class="font-bold text-slate-500">B)</span>
+                <span>Sistema Nervioso Autónomo o Vegetativo (predominio simpático para aumentar gasto cardíaco y modular resistencia vascular).</span>
+              </button>
+              <button onclick="checkCaseOption(2, 'C', false)" class="w-full text-left p-3 rounded-xl border border-slate-300 hover:border-cyan-500 hover:bg-cyan-50/40 text-xs sm:text-sm transition flex items-start gap-2.5">
+                <span class="font-bold text-slate-500">C)</span>
+                <span>Sistema Nervioso Entérico exclusivamente a través del plexo mientérico de Auerbach.</span>
+              </button>
+            </div>
+            <div id="case-feedback-2" class="mt-3 text-xs p-3 rounded-xl hidden"></div>
+          </div>
+        </div>
+
+        <!-- Caso 3 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-sm">
+                03
+              </span>
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-cyan-600">Kinefilaxia y Propiocepción</span>
+                <h3 class="text-base font-heading font-bold text-uccNavy">Reeducación Neuromuscular en Inestabilidad de Tobillo</h3>
+              </div>
+            </div>
+            <span id="case-badge-3" class="text-xs px-2.5 py-1 rounded-full font-bold bg-slate-100 text-slate-600">Pendiente</span>
+          </div>
+
+          <p class="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
+            Una deportista en recuperación de un esguince grado II de tobillo realiza ejercicios sobre un plano inestable (disco de Freeman). Cuando el tobillo oscila hacia la inversión súbita, contrae rápidamente los músculos peroneos para evitar la recaída.
+          </p>
+
+          <div class="mt-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <h4 class="text-xs font-bold text-slate-700 mb-2">Pregunta Técnica: ¿Cuál es la ruta estructural entre el SNC y el SNP que permite esta corrección postural reactiva?</h4>
+            <div class="space-y-2" id="case-opts-3">
+              <button onclick="checkCaseOption(3, 'A', true)" class="w-full text-left p-3 rounded-xl border border-slate-300 hover:border-cyan-500 hover:bg-cyan-50/40 text-xs sm:text-sm transition flex items-start gap-2.5">
+                <span class="font-bold text-slate-500">A)</span>
+                <span>Aferencia propioceptiva del SNP vía nervios espinales lumbosacros → Integración medular/cerebelosa (SNC) → Eferencia somática a los músculos peroneos.</span>
+              </button>
+              <button onclick="checkCaseOption(3, 'B', false)" class="w-full text-left p-3 rounded-xl border border-slate-300 hover:border-cyan-500 hover:bg-cyan-50/40 text-xs sm:text-sm transition flex items-start gap-2.5">
+                <span class="font-bold text-slate-500">B)</span>
+                <span>Aferencia visual exclusiva por el nervio óptico → Médula espinal sin pasar por el encéfalo → Regulación del músculo cardíaco.</span>
+              </button>
+              <button onclick="checkCaseOption(3, 'C', false)" class="w-full text-left p-3 rounded-xl border border-slate-300 hover:border-cyan-500 hover:bg-cyan-50/40 text-xs sm:text-sm transition flex items-start gap-2.5">
+                <span class="font-bold text-slate-500">C)</span>
+                <span>El estímulo no viaja por ningún nervio raquídeo; es controlado exclusivamente por el sistema entérico digestivo.</span>
+              </button>
+            </div>
+            <div id="case-feedback-3" class="mt-3 text-xs p-3 rounded-xl hidden"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Constancia Formativa de Finalización -->
+      <div id="diploma-box" class="mt-8 bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl p-8 text-white text-center shadow-xl border border-accent/40 hidden">
+        <div class="w-16 h-16 rounded-full bg-accent/20 text-accent-light mx-auto flex items-center justify-center text-3xl mb-3 border border-accent/30">
+          <i class="fa-solid fa-graduation-cap text-accent"></i>
+        </div>
+        <span class="text-xs font-semibold tracking-widest uppercase text-accent-light">Universidad Católica de Cuyo • Facultad de Ciencias Médicas</span>
+        <h3 class="text-2xl sm:text-3xl font-heading font-extrabold text-white mt-1">¡Laboratorio Neurofuncional Completado con Éxito!</h3>
+        <p class="text-slate-300 text-xs sm:text-sm max-w-xl mx-auto mt-2 leading-relaxed">
+          Has completado satisfactoriamente el análisis de la organización anatómica (SNC-SNP), la clasificación funcional (Somático-Autónomo-Entérico) y la dinámica sensoriomotora integrada, pilares biofísicos de la Kinesiología y Fisiatría.
+        </p>
+        <div class="mt-6 flex flex-wrap items-center justify-center gap-4">
+          <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-accent hover:bg-accent-hover text-white font-bold text-xs sm:text-sm transition shadow-lg flex items-center gap-2">
+            <i class="fa-solid fa-print"></i> Imprimir Constancia Formativa
+          </button>
+        </div>
+      </div>
+    </section>
+    </div>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL DE VADEMÉCUM NEUROANATÓMICO (UCCuyo)                                -->
+  <!-- ========================================================================= -->
+  <div id="modal-formulas" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto custom-scroll">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-accent text-white flex items-center justify-center text-sm font-bold">
+            <i class="fa-solid fa-book-bookmark"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800">Vademécum de Neuroanatomía & Biomecánica</h3>
+            <p class="text-[11px] text-slate-500 font-medium">Cátedra de Introducción a la Kinesiología - UCCuyo</p>
+          </div>
+        </div>
+        <button onclick="closeFormulasModal()" class="text-slate-400 hover:text-slate-700 text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-xs text-slate-700">
+        <!-- División Estructural -->
+        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+          <div class="font-bold text-accent text-xs mb-1">1. Organización Anatómica del Sistema Nervioso</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 my-1 text-center font-mono text-xs">
+            <div class="bg-white p-2 rounded border border-slate-200">
+              <span class="text-accent font-bold block">SNC (Eje Protegido)</span>
+              <span class="text-[11px] text-slate-600 font-sans">Encéfalo (Cerebro, Cerebelo, Tronco encefálico) en cráneo + Médula espinal en conducto vertebral.</span>
+            </div>
+            <div class="bg-white p-2 rounded border border-slate-200">
+              <span class="text-accent font-bold block">SNP (Vías de Conducción)</span>
+              <span class="text-[11px] text-slate-600 font-sans">12 Pares Craneales (emergen del encéfalo) + 31 Pares Espinales (emergen de la médula espinal).</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed mt-1">
+            Distribución de los 31 pares raquídeos: 8 cervicales (C1-C8), 12 torácicos (T1-T12), 5 lumbares (L1-L5), 5 sacros (S1-S5) y 1 coccígeo (Co1).
+          </p>
+        </div>
+
+        <!-- División Funcional -->
+        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+          <div class="font-bold text-accent text-xs mb-1">2. Organización Funcional del Sistema Nervioso</div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 my-1 text-center font-mono text-xs">
+            <div class="bg-white p-2 rounded border border-slate-200">
+              <span class="text-blue-800 font-bold block">Somático (SNS)</span>
+              <span class="text-[10px] text-slate-600 font-sans">Control voluntario. Músculo esquelético, praxias, postura y marcha.</span>
+            </div>
+            <div class="bg-white p-2 rounded border border-slate-200">
+              <span class="text-emerald-800 font-bold block">Autónomo (SNA)</span>
+              <span class="text-[10px] text-slate-600 font-sans">Involuntario / Vegetativo. Frecuencia cardíaca, presión arterial y homeostasis.</span>
+            </div>
+            <div class="bg-white p-2 rounded border border-slate-200">
+              <span class="text-amber-800 font-bold block">Entérico (SNE)</span>
+              <span class="text-[10px] text-slate-600 font-sans">Red intrínseca visceral. Plexos de Auerbach y Meissner (motilidad digestiva).</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tríada Funcional -->
+        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+          <div class="font-bold text-accent text-xs mb-1">3. Tríada Funcional Sensoriomotora</div>
+          <div class="font-mono text-xs font-bold text-slate-800 my-1 bg-white p-2 rounded border border-slate-200 text-center">
+            Receptor Sensitivo (Aferente) → Centro Integrador (SNC) → Efector Muscular (Eferente)
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed">
+            Base fisiokinésica del control motor y de los reflejos miotáticos (ej. reflejo rotuliano L3-L4). La señal aferente viaja por neuronas sensitivas, se modula o integra en el asta posterior/encéfalo, y se transmite por motoneuronas eferentes hacia el efector muscular.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-5 pt-3 border-t border-slate-100 flex justify-end">
+        <button onclick="closeFormulasModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition">
+          Cerrar Vademécum
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL DE GUÍA DE USO / TUTORIAL                                           -->
+  <!-- ========================================================================= -->
+  <div id="modal-tutorial" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto custom-scroll">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-accent text-white flex items-center justify-center text-sm font-bold shadow-xs">
+            <i class="fa-solid fa-compass"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800">Guía de Uso del Simulador Neurofuncional</h3>
+            <p class="text-[11px] text-slate-500 font-medium">Orientaciones prácticas para el curso de ingreso a Kinesiología (UCCuyo)</p>
+          </div>
+        </div>
+        <button onclick="closeTutorial()" class="text-slate-400 hover:text-slate-700 text-lg transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3.5 text-xs text-slate-600 leading-relaxed">
+        <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="w-6 h-6 rounded-full bg-accent text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5 shadow-xs">1</div>
+          <div>
+            <strong class="text-slate-800 block text-xs mb-0.5">Estructura y Navegación Modular:</strong>
+            Utiliza el menú lateral izquierdo para desplazarte de manera fluida entre las cuatro estaciones de aprendizaje clínico: <em>1. Mapa Anatómico (SNC & SNP)</em>, <em>2. Clasificación Funcional</em>, <em>3. Tríada Estímulo-Respuesta</em> y <em>4. Taller Kinésico & Casos</em>.
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="w-6 h-6 rounded-full bg-accent text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5 shadow-xs">2</div>
+          <div>
+            <strong class="text-slate-800 block text-xs mb-0.5">Módulo 1 • Fichas Anatómicas & Desafío de Ensamblaje:</strong>
+            Examina las tarjetas clínicas detalladas de los órganos del <strong>SNC</strong> (Cerebro, Cerebelo, Tronco encefálico con sus 3 pisos y Médula espinal en su conducto raquídeo) y de las ramas del <strong>SNP</strong> (12 pares craneales y 31 pares espinales con desglose segmentario: 8C, 12T, 5L, 5S, 1Co). Pon a prueba tus conocimientos en el desafío inferior clasificando estructuras en el eje central protegido o en las vías de conducción periféricas con retroalimentación instantánea.
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="w-6 h-6 rounded-full bg-accent text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5 shadow-xs">3</div>
+          <div>
+            <strong class="text-slate-800 block text-xs mb-0.5">Módulo 2 • Comparativa Funcional & Retos Clínicos:</strong>
+            Compara las bases neurofisiológicas del sistema <strong>Somático</strong> (voluntario / músculo estriado esquelético), <strong>Autónomo</strong> (involuntario / visceral y cardiovascular) y <strong>Entérico</strong> (plexos de Auerbach y Meissner en motilidad digestiva). Resuelve el carrusel de 6 casos prácticos identificando el subsistema rector de cada acto fisiokinésico.
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="w-6 h-6 rounded-full bg-accent text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5 shadow-xs">4</div>
+          <div>
+            <strong class="text-slate-800 block text-xs mb-0.5">Módulo 3 • Simulador Bioeléctrico de la Tríada:</strong>
+            Alterna entre el <em>Arco Reflejo Medular (L3-L4)</em> y el <em>Acto Motor Voluntario Complejo</em>. Pulsa <em>«Disparar Estímulo»</em> para visualizar la propagación continua del potencial de acción y su estela bioeléctrica cronometrada en milisegundos a través de sus tres fases: <strong>Receptor Sensitivo (Aferente)</strong> → <strong>Centro Integrador (SNC)</strong> → <strong>Efector Muscular (Eferente)</strong>, observando la sincronización automática de las tarjetas descriptivas inferiores.
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="w-6 h-6 rounded-full bg-accent text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5 shadow-xs">5</div>
+          <div>
+            <strong class="text-slate-800 block text-xs mb-0.5">Módulo 4 • Taller Kinésico, Vademécum & Constancia:</strong>
+            Resuelve los tres casos de razonamiento clínico (reflejo rotuliano miotático, adaptación autonómica en prueba de marcha de 6 minutos y reeducación propioceptiva de tobillo en plano inestable de Freeman). Consulta el <em>Vademécum</em> en la cabecera en cualquier momento para revisar conceptos teóricos y genera tu <em>Constancia Formativa de Aprendizaje</em> al completar el laboratorio.
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5 pt-3 border-t border-slate-100 flex justify-end">
+        <button onclick="closeTutorial()" class="px-5 py-2.5 bg-accent hover:bg-accent-hover text-white font-semibold text-xs rounded-xl shadow-sm transition">
+          Comenzar Simulador
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- COMPONENTE TOAST FLOTANTE                                                 -->
+  <!-- ========================================================================= -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 border border-slate-700">
+    <i class="fa-solid fa-circle-check text-lime-400"></i>
+    <span id="toast-msg">Mensaje informativo</span>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- FOOTER INSTITUCIONAL UCCUYO                                               -->
+  <!-- ========================================================================= -->
+  <footer class="bg-white border-t border-gray-200 mt-8 py-4">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500">
+      <div>Universidad Católica de Cuyo | Facultad de Ciencias Médicas</div>
+      <div>Licenciatura en Kinesiología y Fisiatría - Unidad 7</div>
+    </div>
+  </footer>
+
+  <!-- ==================== SCRIPTS & LÓGICA INTERACTIVA ==================== -->
+  <script>
+    // Efectos de sonido deshabilitados
+    function playTone() {}
+    function soundSuccess() {}
+    function soundError() {}
+    function soundPulse() {}
+
+    /* =========================================================================
+       2. GESTIÓN DE PESTAÑAS (TABS) Y PROGRESO GENERAL
+       ========================================================================= */
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    const tabIds = ['mod-anatomia', 'mod-funcional', 'mod-triada', 'mod-taller'];
+
+    function switchTab(tabId) {
+      playTone(480, 'sine', 0.06, 0.05);
+
+      tabIds.forEach(id => {
+        const contentEl = document.getElementById(id);
+        const btnEl = document.getElementById(`tab-btn-${id}`);
+        if (contentEl) {
+          if (id === tabId) {
+            contentEl.classList.remove('hidden');
+            contentEl.classList.add('block');
+          } else {
+            contentEl.classList.add('hidden');
+            contentEl.classList.remove('block');
+          }
+        }
+        if (btnEl) {
+          if (id === tabId) {
+            btnEl.className = "bg-accent text-white flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-semibold transition shadow-sm flex items-center gap-2";
+          } else {
+            btnEl.className = "text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition flex items-center gap-2";
+          }
+        }
+      });
+
+      updateGlobalProgress();
+    }
+
+    /* Funciones de Modales y Toasts */
+    function openFormulasModal() {
+      document.getElementById('modal-formulas').classList.remove('hidden');
+    }
+    function closeFormulasModal() {
+      document.getElementById('modal-formulas').classList.add('hidden');
+    }
+    function openTutorial() {
+      document.getElementById('modal-tutorial').classList.remove('hidden');
+    }
+    function closeTutorial() {
+      document.getElementById('modal-tutorial').classList.add('hidden');
+    }
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      if (!toast || !toastMsg) return;
+      toastMsg.textContent = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3000);
+    }
+
+    /* Progreso global */
+    let progState = {
+      anatDone: 0, // max 6
+      funcDone: 0, // max 6
+      triadFired: false,
+      casesDone: 0 // max 3
+    };
+
+    function updateGlobalProgress() {
+      const totalSteps = 6 + 6 + 1 + 3;
+      const currentScore = progState.anatDone + progState.funcDone + (progState.triadFired ? 1 : 0) + progState.casesDone;
+      
+      if (currentScore >= 13) {
+        const diploma = document.getElementById('diploma-box');
+        if (diploma) diploma.classList.remove('hidden');
+      }
+    }
+
+    /* =========================================================================
+       3. MÓDULO 1: INSPECTOR ANATÓMICO Y DESAFÍO ESTRUCTURAL
+       ========================================================================= */
+    const anatomyData = {
+      cerebro: {
+        badge: 'SNC • Encéfalo',
+        badgeColor: 'bg-blue-100 text-blue-800',
+        cavity: 'Cavidad Craneal Ósea',
+        title: 'Cerebro (Telencéfalo y Diencéfalo)',
+        desc: 'Parte más voluminosa y rostral del encéfalo. Aloja la corteza cerebral, núcleos de la base y el diencéfalo (tálamo e hipotálamo). Gobierna la motricidad voluntaria, sensaciones conscientes, aprendizaje y praxias motoras.',
+        kine: 'En Kinesiología Neurológica, la estimulación neuromuscular y facilitación propioceptiva aprovechan la neuroplasticidad cortical para recuperar la función en pacientes post-ACV.'
+      },
+      cerebelo: {
+        badge: 'SNC • Encéfalo',
+        badgeColor: 'bg-purple-100 text-purple-800',
+        cavity: 'Fosa Craneal Posterior',
+        title: 'Cerebelo («Pequeño Cerebro»)',
+        desc: 'Ubicado por detrás del tronco encefálico y debajo de los lóbulos occipitales. Es el órgano primordial para la coordinación motora, metría del movimiento, tono postural y equilibrio dinámico.',
+        kine: 'Clave en rehabilitación del equilibrio y ataxia: los ejercicios vestibulares y propioceptivos reentrenan las aferencias espinocerebelosas.'
+      },
+      tronco: {
+        badge: 'SNC • Encéfalo',
+        badgeColor: 'bg-indigo-100 text-indigo-800',
+        cavity: 'Fosa Craneal Posterior',
+        title: 'Tronco Encefálico Completo',
+        desc: 'Conecta el cerebro y cerebelo con la médula espinal. Formado de superior a inferior por: Mesencéfalo, Protuberancia (Puente) y Bulbo Raquídeo. Contiene los núcleos de los pares craneales (III al XII) y centros de la vigilia (SARA).',
+        kine: 'Gobierna funciones automáticas reflejas indispensables como la respiración coordinada con la deglución durante la fisioterapia orofaríngea.'
+      },
+      mesencefalo: {
+        badge: 'SNC • Tronco Encefálico',
+        badgeColor: 'bg-blue-100 text-blue-800',
+        cavity: 'Cavidad Craneal',
+        title: 'Mesencéfalo (Cerebro Medio)',
+        desc: 'Porción superior del tronco encefálico. Contiene los pedúnculos cerebrales, el acueducto mesencefálico, los colículos superiores e inferiores y la sustancia negra (productora de dopamina).',
+        kine: 'Afectado en la Enfermedad de Parkinson. Los kinesiólogos trabajan estrategias rítmicas para superar el congelamiento de la marcha (freezing).'
+      },
+      protuberancia: {
+        badge: 'SNC • Tronco Encefálico',
+        badgeColor: 'bg-blue-100 text-blue-800',
+        cavity: 'Cavidad Craneal',
+        title: 'Protuberancia Anular (Puente de Varolio)',
+        desc: 'Segmento medio prominente del tronco encefálico. Conecta ambos hemisferios cerebelosos y alberga núcleos para nervios craneales motores y sensitivos esenciales como el V (Trigémino) y VII (Facial).',
+        kine: 'Fundamental en la rehabilitación de parálisis facial periférica vs. central y control del soporte postural anti-gravitatorio.'
+      },
+      bulbo: {
+        badge: 'SNC • Tronco Encefálico',
+        badgeColor: 'bg-blue-100 text-blue-800',
+        cavity: 'Fosa Posterior / Foramen Magno',
+        title: 'Bulbo Raquídeo (Médula Oblongada)',
+        desc: 'Segmento inferior del tronco encefálico que finaliza en el foramen magno. Aloja los centros vitales cardíaco, vasomotor y respiratorio, además de la decusación de las pirámides motoras.',
+        kine: 'En kinesiología respiratoria, la sensibilidad bulbar a los niveles de CO2 y pH arterial es la base para entender el patrón ventilatorio del paciente.'
+      },
+      medula: {
+        badge: 'SNC • Eje Espinal',
+        badgeColor: 'bg-cyan-100 text-cyan-900',
+        cavity: 'Conducto Vertebral (Raquídeo)',
+        title: 'Médula Espinal',
+        desc: 'Cordón cilíndrico del SNC alojado dentro del conducto vertebral desde la base del cráneo hasta L1-L2 (donde continúa como cauda equina o cola de caballo). Distribuye la sustancia gris en el centro (astas anterior motora y posterior sensitiva) y la sustancia blanca en cordones periféricos.',
+        kine: 'Centro integrador de los reflejos miotáticos (osteotendinosos) evaluados rutinariamente por el kinesiólogo para valorar integridad neurológica segmentaria.'
+      },
+      pares_craneales: {
+        badge: 'SNP • Periférico',
+        badgeColor: 'bg-amber-100 text-amber-900',
+        cavity: 'Emergencia de Forámenes de la Base del Cráneo',
+        title: '12 Pares de Nervios Craneales',
+        desc: 'Nervios del SNP numerados del I al XII que emergen directamente del encéfalo (la mayoría del tronco encefálico, excepto I y II). Inervan estructuras de cabeza, cuello y vísceras toracoabdominales (como el X par o Vago).',
+        kine: 'El Kinesiólogo evalúa pares como el XI (Espinal/Accesorio) para el trapecio y esternocleidomastoideo, o el VII (Facial) para la mímica facial.'
+      },
+      pares_espinales: {
+        badge: 'SNP • Periférico',
+        badgeColor: 'bg-cyan-100 text-cyan-900',
+        cavity: 'Forámenes Intervertebrales (Agujeros de Conjunción)',
+        title: '31 Pares de Nervios Espinales (Raquídeos)',
+        desc: 'Estructuras periféricas formadas por la unión de una raíz anterior motora y una posterior sensitiva: 8 pares cervicales, 12 torácicos, 5 lumbares, 5 sacros y 1 coccígeo. Salen del conducto raquídeo hacia los miotomas y dermatomas corporales.',
+        kine: 'Pilar de la kinesiología traumatológica: valoración de radiculopatías ciáticas (L5-S1), síndromes cervicobraquiales (C5-C7) y plexopatías.'
+      }
+    };
+
+    function inspectAnatomy(key) {
+      playTone(550, 'sine', 0.08, 0.08);
+      const data = anatomyData[key];
+      if (!data) return;
+
+      const badge = document.getElementById('anat-badge');
+      const cavity = document.getElementById('anat-cavity');
+      const title = document.getElementById('anat-title');
+      const desc = document.getElementById('anat-desc');
+      const kine = document.getElementById('anat-kine');
+
+      badge.innerText = data.badge;
+      badge.className = `px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${data.badgeColor}`;
+      cavity.innerHTML = `<i class="fa-solid fa-shield-halved text-slate-400"></i> ${data.cavity}`;
+      title.innerText = data.title;
+      desc.innerText = data.desc;
+      kine.innerText = data.kine;
+
+      const card = document.getElementById('anatomy-detail-card');
+      card.classList.add('ring-2', 'ring-cyan-400');
+      setTimeout(() => card.classList.remove('ring-2', 'ring-cyan-400'), 500);
+    }
+
+    /* Mini-juego de Clasificación Anatómica */
+    const classificationItems = [
+      { name: 'Bulbo Raquídeo', hint: 'Centro vital cardiorrespiratorio en fosa posterior.', correct: 'SNC' },
+      { name: 'Nervio Ciático (L4-S3)', hint: 'Gran nervio que inerva la musculatura posterior del muslo y pierna.', correct: 'SNP' },
+      { name: 'Cerebelo', hint: 'Regulador de la coordinación motora y el equilibrio.', correct: 'SNC' },
+      { name: 'XII Par Craneal (Nervio Hipogloso)', hint: 'Nervio eferente craneal que inerva la musculatura de la lengua.', correct: 'SNP' },
+      { name: 'Médula Espinal (Segmento Cervical)', hint: 'Eje neural protegido dentro del conducto raquídeo vertebral.', correct: 'SNC' },
+      { name: 'Nervio Femoral / Crural (L2-L4)', hint: 'Rama periférica anterior para la inervación del músculo cuádriceps.', correct: 'SNP' }
+    ];
+
+    let currentItemIdx = 0;
+    let correctClassifCount = 0;
+
+    function renderCurrentClassifItem() {
+      if (currentItemIdx >= classificationItems.length) {
+        document.getElementById('target-item-box').innerHTML = `
+          <div class="text-emerald-700 font-bold text-sm py-2">
+            <i class="fa-solid fa-circle-check text-xl block mb-1"></i>
+            ¡Módulo Anatómico Completado!
+          </div>
+          <p class="text-xs text-slate-500">Has ubicado con precisión todas las estructuras en el SNC y SNP.</p>
+        `;
+        return;
+      }
+      const item = classificationItems[currentItemIdx];
+      document.getElementById('current-item-text').innerText = item.name;
+      document.getElementById('current-item-hint').innerText = item.hint;
+    }
+
+    function evaluateClassification(choice) {
+      if (currentItemIdx >= classificationItems.length) return;
+
+      const item = classificationItems[currentItemIdx];
+      const feedback = document.getElementById('classif-feedback');
+      feedback.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800');
+
+      if (choice === item.correct) {
+        soundSuccess();
+        correctClassifCount++;
+        progState.anatDone = correctClassifCount;
+        feedback.classList.add('bg-emerald-100', 'text-emerald-800');
+        feedback.innerHTML = `<strong>¡Correcto!</strong> El elemento <em>${item.name}</em> pertenece estructuralmente al <strong>${item.correct}</strong>.`;
+      } else {
+        soundError();
+        feedback.classList.add('bg-rose-100', 'text-rose-800');
+        feedback.innerHTML = `<strong>Atención:</strong> <em>${item.name}</em> no pertenece al ${choice}. Corresponde al <strong>${item.correct}</strong>.`;
+      }
+
+      document.getElementById('drag-score').innerText = `Aciertos: ${correctClassifCount}/${classificationItems.length}`;
+      currentItemIdx++;
+      setTimeout(() => {
+        renderCurrentClassifItem();
+        feedback.classList.add('hidden');
+        updateGlobalProgress();
+      }, 1600);
+    }
+
+    /* =========================================================================
+       4. MÓDULO 2: CLASIFICACIÓN FUNCIONAL (SOMÁTICO VS. AUTÓNOMO VS. ENTÉRICO)
+       ========================================================================= */
+    const functionalCases = [
+      {
+        icon: 'fa-dumbbell',
+        tag: 'Movimiento Kinésico Activo',
+        title: 'Lanzamiento de balón medicinal en rehabilitación de hombro',
+        desc: 'El paciente recluta voluntariamente deltoides y pectoral mayor con el objetivo de fortalecer el complejo del manguito rotador.',
+        answer: 'somático',
+        feedback: '¡Exacto! La contracción voluntaria del músculo esquelético para ejecutar praxias y ejercicios terapéuticos es comandada por el Sistema Nervioso Somático.'
+      },
+      {
+        icon: 'fa-heart-pulse',
+        tag: 'Fisiología Cardiovascular en Esfuerzo',
+        title: 'Aumento de la frecuencia cardíaca durante prueba de esfuerzo',
+        desc: 'Durante el test ergométrico, el nodo sinusal recibe estimulación para aumentar los latidos y sostener la demanda de oxígeno muscular sin intervención voluntaria.',
+        answer: 'autónomo',
+        feedback: '¡Correcto! La regulación inconsciente de la frecuencia cardíaca, gasto cardíaco y presión arterial es función cardinal del Sistema Nervioso Autónomo.'
+      },
+      {
+        icon: 'fa-utensils',
+        tag: 'Motilidad Visceral',
+        title: 'Propulsión peristáltica del quimo en el intestino delgado',
+        desc: 'Las contracciones coordinadas de la musculatura lisa intestinal avanzan el bolo alimenticio mediadas localmente por los plexos de Auerbach y Meissner.',
+        answer: 'entérico',
+        feedback: '¡Muy bien! El Sistema Nervioso Entérico es la red intrínseca especializada en la motilidad, secreción y digestión gastrointestinal.'
+      },
+      {
+        icon: 'fa-person-walking',
+        tag: 'Biomecánica de la Marcha',
+        title: 'Dorsiflexión del pie con el tibial anterior para despegar el suelo',
+        desc: 'En la fase de oscilación de la marcha, el paciente activa voluntariamente el músculo tibial anterior para evitar el arrastre de los dedos.',
+        answer: 'somático',
+        feedback: '¡Acertado! El control consciente de los miotomas periféricos para la locomoción corresponde a la división Somática de la vida de relación.'
+      },
+      {
+        icon: 'fa-temperature-arrow-up',
+        tag: 'Termorregulación en Fisioterapia',
+        title: 'Sudoración profusa y vasodilatación periférica en hidroterapia tibia',
+        desc: 'El organismo responde automáticamente a la inmersión en agua caliente disipando calor a través de las glándulas sudoríparas y tono arteriolar.',
+        answer: 'autónomo',
+        feedback: '¡Correcto! La termorregulación y la vasomotricidad involuntaria forman parte de los mecanismos homeostáticos del Sistema Nervioso Autónomo.'
+      },
+      {
+        icon: 'fa-bowl-food',
+        tag: 'Reflejos Digestivos Locales',
+        title: 'Reflejo miogástrico ante la distensión de la pared gástrica',
+        desc: 'La red neural intrínseca parietal sensa el volumen gástrico y activa reflejos entéricos locales sin requerir instrucción previa del córtex.',
+        answer: 'entérico',
+        feedback: '¡Excelente! Los circuitos reflejos intramurales autónomos digestivos son propios del Sistema Nervioso Entérico.'
+      }
+    ];
+
+    let currentFuncIndex = 0;
+    let correctFuncCount = 0;
+
+    function renderFunctionalCase() {
+      if (currentFuncIndex >= functionalCases.length) {
+        document.getElementById('func-case-card').innerHTML = `
+          <div class="text-cyan-700 font-bold text-base py-3">
+            <i class="fa-solid fa-circle-check text-2xl block mb-1 text-cyan-600"></i>
+            ¡Excelente Dominio Funcional!
+          </div>
+          <p class="text-xs text-slate-600">Has completado todos los casos clínicos diferenciando Somático, Autónomo y Entérico.</p>
+        `;
+        document.getElementById('func-counter').innerText = 'Completado: 6 de 6';
+        return;
+      }
+
+      const c = functionalCases[currentFuncIndex];
+      document.getElementById('func-counter').innerText = `Caso ${currentFuncIndex + 1} de ${functionalCases.length}`;
+      document.getElementById('func-case-icon').innerHTML = `<i class="fa-solid ${c.icon}"></i>`;
+      document.getElementById('func-case-tag').innerText = c.tag;
+      document.getElementById('func-case-title').innerText = c.title;
+      document.getElementById('func-case-desc').innerText = c.desc;
+    }
+
+    function answerFunctional(selected) {
+      if (currentFuncIndex >= functionalCases.length) return;
+      const c = functionalCases[currentFuncIndex];
+      const feedback = document.getElementById('func-feedback');
+      feedback.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'bg-rose-100', 'text-rose-900');
+
+      if (selected === c.answer) {
+        soundSuccess();
+        correctFuncCount++;
+        progState.funcDone = correctFuncCount;
+        feedback.classList.add('bg-emerald-100', 'text-emerald-900');
+        feedback.innerHTML = `<i class="fa-solid fa-check-circle mr-1"></i> ${c.feedback}`;
+      } else {
+        soundError();
+        feedback.classList.add('bg-rose-100', 'text-rose-900');
+        feedback.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> Respuesta incorrecta. Esta situación responde al sistema <strong>${c.answer.toUpperCase()}</strong>.`;
+      }
+
+      currentFuncIndex++;
+      setTimeout(() => {
+        renderFunctionalCase();
+        feedback.classList.add('hidden');
+        updateGlobalProgress();
+      }, 1900);
+    }
+
+    function resetFunctionalTest() {
+      currentFuncIndex = 0;
+      correctFuncCount = 0;
+      progState.funcDone = 0;
+      renderFunctionalCase();
+      document.getElementById('func-feedback').classList.add('hidden');
+      updateGlobalProgress();
+    }
+
+    /* =========================================================================
+       5. MÓDULO 3: TRÍADA FUNCIONAL DEL SISTEMA NERVIOSO (ANIMACIÓN Y CIRCUITO)
+       ========================================================================= */
+    let currentCircuitMode = 'reflejo'; // 'reflejo' o 'voluntario'
+    let isImpulseRunning = false;
+
+    function setTriadaCircuit(mode) {
+      playTone(450, 'sine', 0.08, 0.06);
+      currentCircuitMode = mode;
+
+      const btnReflejo = document.getElementById('btn-circuit-reflejo');
+      const btnVoluntario = document.getElementById('btn-circuit-voluntario');
+      const nameLabel = document.getElementById('circuit-name-label');
+      const typeLabel = document.getElementById('circuit-type-label');
+
+      const step1 = document.getElementById('step1-label');
+      const step2 = document.getElementById('step2-label');
+      const step3 = document.getElementById('step3-label');
+
+      const txt1 = document.getElementById('triada-text-1');
+      const txt2 = document.getElementById('triada-text-2');
+      const txt3 = document.getElementById('triada-text-3');
+
+      if (mode === 'reflejo') {
+        btnReflejo.className = 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-white text-uccNavy shadow-sm';
+        btnVoluntario.className = 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-600 hover:text-uccNavy';
+
+        nameLabel.innerText = 'Arco Reflejo Miotático Rotuliano (Segmento Espinal L3-L4)';
+        typeLabel.innerText = 'Respuesta refleja medular rápida, de protección biomecánica e involuntaria.';
+
+        step1.innerText = 'Huso Neuromuscular';
+        step2.innerText = 'Médula Espinal (SNC)';
+        step3.innerText = 'Músculo Cuádriceps';
+
+        txt1.innerText = 'El estiramiento súbito del tendón deforma los husos neuromusculares del cuádriceps, generando un tren de potenciales de acción aferentes.';
+        txt2.innerText = 'La neurona sensitiva hace sinapsis en la sustancia gris de la médula espinal (L3-L4) directamente con la motoneurona alfa.';
+        txt3.innerText = 'La motoneurona conduce la descarga eferente a la placa motora, contrayendo el cuádriceps y extendiendo la rodilla.';
+      } else {
+        btnVoluntario.className = 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-white text-uccNavy shadow-sm';
+        btnReflejo.className = 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-600 hover:text-uccNavy';
+
+        nameLabel.innerText = 'Acto Motor Voluntario Complejo (Patear un balón / Deambulación)';
+        typeLabel.innerText = 'Circuito voluntario coordinado por centros encefálicos superiores y vías descendentes.';
+
+        step1.innerText = 'Receptor Visual y Propioceptivo';
+        step2.innerText = 'Corteza Cerebral y Cerebelo';
+        step3.innerText = 'Cadena Cinética de Músculos';
+
+        txt1.innerText = 'Receptores visuales (retina) y propioceptivos articulares sensan la posición espacial del balón y del cuerpo.';
+        txt2.innerText = 'La corteza motora primaria, área premotora y cerebelo procesan la trayectoria, equilibrio y fuerza requerida.';
+        txt3.innerText = 'La vía corticoespinal (piramidal) activa los grupos musculares agonistas y sinergistas con precisión milimétrica.';
+      }
+
+      resetCircuitAnimation();
+    }
+
+    function showTriadStep(step) {
+      soundPulse();
+      const cards = [
+        document.getElementById('card-triada-1'),
+        document.getElementById('card-triada-2'),
+        document.getElementById('card-triada-3')
+      ];
+      cards.forEach((c, idx) => {
+        if (idx === (step - 1)) {
+          c.classList.add('ring-2', 'ring-cyan-500', 'bg-white', 'shadow-md');
+        } else {
+          c.classList.remove('ring-2', 'ring-cyan-500', 'bg-white', 'shadow-md');
+        }
+      });
+    }
+
+    function triggerNerveImpulse() {
+      if (isImpulseRunning) return;
+      isImpulseRunning = true;
+      progState.triadFired = true;
+      updateGlobalProgress();
+
+      const dot = document.getElementById('action-potential-dot');
+      const trail = document.getElementById('action-potential-trail');
+      const statusText = document.getElementById('signal-status-text');
+      const msLabel = document.getElementById('signal-ms');
+      
+      dot.style.display = 'block';
+      if (trail) trail.style.display = 'block';
+
+      // Ruta Aferente exacta usando getPointAtLength del SVG
+      const pathAff = document.getElementById('path-afferent');
+      const pathEff = document.getElementById('path-efferent');
+      const lenAff = pathAff ? pathAff.getTotalLength() : 300;
+      const lenEff = pathEff ? pathEff.getTotalLength() : 300;
+
+      // Fase 1: Inicio en Receptor
+      statusText.innerHTML = '<strong class="text-sky-300">Fase 1 (Aferente):</strong> Transducción del estímulo sensitivo y conducción por axón aferente hacia el SNC...';
+      showTriadStep(1);
+
+      const startTime = performance.now();
+      const duration = 2800; // ms totales para visualización fluida
+
+      function updatePositions(x, y, color) {
+        dot.setAttribute('cx', x);
+        dot.setAttribute('cy', y);
+        dot.setAttribute('fill', color);
+        if (trail) {
+          trail.setAttribute('cx', x);
+          trail.setAttribute('cy', y);
+          trail.setAttribute('fill', color);
+        }
+      }
+
+      function animateSignal(timestamp) {
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(1.0, elapsed / duration);
+        msLabel.innerText = `${(elapsed / 10).toFixed(1)} ms`;
+
+        if (progress < 0.42) {
+          // Fase 1: Conducción Aferente (0% a 42%)
+          const t = progress / 0.42;
+          if (pathAff) {
+            const pt = pathAff.getPointAtLength(t * lenAff);
+            updatePositions(pt.x, pt.y, '#38bdf8');
+          } else {
+            const x = 150 + (450 - 150) * t;
+            const y = 160 + (150 - 160) * t - Math.sin(t * Math.PI) * 15;
+            updatePositions(x, y, '#38bdf8');
+          }
+        } else if (progress >= 0.42 && progress < 0.58) {
+          // Fase 2: Integración en SNC (42% a 58%)
+          if (!statusText.innerHTML.includes('Fase 2')) {
+            statusText.innerHTML = '<strong class="text-purple-300">Fase 2 (Integración):</strong> Procesamiento y modulación sináptica en centros integradores del SNC...';
+            showTriadStep(2);
+          }
+          // Ligera oscilación o pulsación en el centro
+          const centerT = (progress - 0.42) / 0.16;
+          const oscY = 150 + Math.sin(centerT * Math.PI * 4) * 3;
+          updatePositions(450, oscY, '#c084fc');
+        } else if (progress >= 0.58 && progress <= 1.0) {
+          // Fase 3: Conducción Eferente Motor (58% a 100%)
+          if (!statusText.innerHTML.includes('Fase 3')) {
+            statusText.innerHTML = '<strong class="text-emerald-300">Fase 3 (Eferente):</strong> Descarga motora por axón eferente y respuesta contráctil del efector muscular...';
+            showTriadStep(3);
+          }
+          const t = (progress - 0.58) / 0.42;
+          if (pathEff) {
+            const pt = pathEff.getPointAtLength(t * lenEff);
+            updatePositions(pt.x, pt.y, '#34d399');
+          } else {
+            const x = 450 + (750 - 450) * t;
+            const y = 150 + (160 - 150) * t + Math.sin(t * Math.PI) * 15;
+            updatePositions(x, y, '#34d399');
+          }
+        }
+
+        if (progress < 1.0) {
+          requestAnimationFrame(animateSignal);
+        } else {
+          isImpulseRunning = false;
+          statusText.innerHTML = '<strong class="text-emerald-400"><i class="fa-solid fa-circle-check"></i> Ciclo de Tríada completado:</strong> Respuesta motriz/secretora efectora ejecutada con éxito.';
+          updatePositions(750, 160, '#34d399');
+          showToast('¡Respuesta motora ejecutada con éxito!');
+          setTimeout(() => {
+            dot.style.display = 'none';
+            if (trail) trail.style.display = 'none';
+          }, 1200);
+        }
+      }
+
+      requestAnimationFrame(animateSignal);
+    }
+
+    function resetCircuitAnimation() {
+      isImpulseRunning = false;
+      const dot = document.getElementById('action-potential-dot');
+      const trail = document.getElementById('action-potential-trail');
+      if (dot) dot.style.display = 'none';
+      if (trail) trail.style.display = 'none';
+      const statusText = document.getElementById('signal-status-text');
+      if (statusText) statusText.innerText = 'Presiona «Disparar Estímulo» para transmitir el potencial bioeléctrico.';
+      const msLabel = document.getElementById('signal-ms');
+      if (msLabel) msLabel.innerText = '0.0 ms';
+      showTriadStep(0);
+    }
+
+    /* =========================================================================
+       6. MÓDULO 4: TALLER KINÉSICO Y RESOLUCIÓN DE CASOS
+       ========================================================================= */
+    let kinePoints = 0;
+    const answeredCases = { 1: false, 2: false, 3: false };
+
+    function checkCaseOption(caseNum, option, isCorrect) {
+      if (answeredCases[caseNum]) return;
+
+      const feedback = document.getElementById(`case-feedback-${caseNum}`);
+      const badge = document.getElementById(`case-badge-${caseNum}`);
+      feedback.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'bg-rose-100', 'text-rose-900');
+
+      if (isCorrect) {
+        soundSuccess();
+        answeredCases[caseNum] = true;
+        progState.casesDone++;
+        kinePoints += 100;
+
+        badge.className = 'text-xs px-2.5 py-1 rounded-full font-bold bg-emerald-100 text-emerald-800';
+        badge.innerHTML = '<i class="fa-solid fa-check"></i> Caso Resuelto Correctamente';
+
+        feedback.classList.add('bg-emerald-100', 'text-emerald-900');
+        feedback.innerHTML = `<strong>¡Respuesta Exacta!</strong> Has identificado la estructura anatómica y funcional correcta para este escenario kinésico.`;
+      } else {
+        soundError();
+        feedback.classList.add('bg-rose-100', 'text-rose-900');
+        feedback.innerHTML = `<strong>Incorrecto.</strong> Revisa las bases anatómicas del caso e inténtalo seleccionando la opción válida.`;
+      }
+
+      // Puntaje no numérico
+      updateGlobalProgress();
+    }
+
+    /* =========================================================================
+       7. INICIALIZACIÓN AL CARGAR LA VENTANA
+       ========================================================================= */
+    window.onload = function() {
+      // Iniciar módulos
+      renderCurrentClassifItem();
+      renderFunctionalCase();
+      inspectAnatomy('cerebro');
+      updateGlobalProgress();
+    };
+  </script>
+</body>
+</html>
